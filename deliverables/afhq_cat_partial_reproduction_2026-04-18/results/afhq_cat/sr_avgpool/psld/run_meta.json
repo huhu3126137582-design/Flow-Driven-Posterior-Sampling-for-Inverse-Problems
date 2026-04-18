@@ -1,0 +1,25 @@
+{
+  "job": {
+    "dataset": "afhq_cat",
+    "task": "sr_avgpool",
+    "method": "psld",
+    "prompt": "a photo of a closed face of a cat",
+    "img_path": "/root/autodl-tmp/FlowDPS : Flow-Driven Posterior Sampling for Inverse Problems/datasets/afhq_cat_val",
+    "workdir": "/root/autodl-tmp/FlowDPS : Flow-Driven Posterior Sampling for Inverse Problems/workdir/public_sd3_benchmark/afhq_cat/sr_avgpool/psld",
+    "requested_num_samples": -1,
+    "actual_num_samples": 493,
+    "img_size": 768,
+    "deg_scale": 12,
+    "nfe": 28,
+    "cfg_scale": 2.0,
+    "step_size": 15.0,
+    "seed": 0,
+    "runtime_sec": 13476.364,
+    "psnr": 11.80879283954606,
+    "ssim": 0.434649185670689,
+    "fid": 321.9125683217443,
+    "lpips": 0.6563739386098139
+  },
+  "status": "completed",
+  "completed_at_unix": 1776500610.2992046
+}

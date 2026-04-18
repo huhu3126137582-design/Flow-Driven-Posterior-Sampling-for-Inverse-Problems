@@ -1,0 +1,25 @@
+{
+  "job": {
+    "dataset": "afhq_cat",
+    "task": "sr_bicubic",
+    "method": "flowchef",
+    "prompt": "a photo of a closed face of a cat",
+    "img_path": "/root/autodl-tmp/FlowDPS : Flow-Driven Posterior Sampling for Inverse Problems/datasets/afhq_cat_val",
+    "workdir": "/root/autodl-tmp/FlowDPS : Flow-Driven Posterior Sampling for Inverse Problems/workdir/public_sd3_benchmark/afhq_cat/sr_bicubic/flowchef",
+    "requested_num_samples": "-1",
+    "actual_num_samples": "493",
+    "img_size": "768",
+    "deg_scale": "12",
+    "nfe": "28",
+    "cfg_scale": "2.0",
+    "step_size": "15.0",
+    "seed": "0",
+    "runtime_sec": "7595.687",
+    "psnr": "24.909333267108416",
+    "ssim": "0.681625372739641",
+    "fid": "55.649129031292205",
+    "lpips": "0.2657881189009239"
+  },
+  "status": "completed",
+  "completed_at_unix": 1776525639.9861257
+}
