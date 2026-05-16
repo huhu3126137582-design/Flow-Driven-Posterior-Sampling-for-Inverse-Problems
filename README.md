@@ -1,109 +1,90 @@
-# [ICCV2025] FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems
+# FlowDPS Reproduction Notes 🌊
 
-![img](assets/main.jpg)
+This repository collects our reading notes, partial reproduction outputs, and benchmark summaries for **FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems**.
 
-## Abstract
+The goal is simple: make the paper's inverse-problem experiments easier to inspect, compare, and resume.
 
+![AFHQ-Cat metric overview](deliverables/afhq_cat_partial_reproduction_2026-04-18/figures/afhq_cat_metric_overview.png)
 
-❗️Flow matching is a recent state-of-the-art framework for generative modeling based on ordinary differential equations (ODEs). While closely related to diffusion models, __it provides a more general perspective__ on generative modeling. 
+## What This Project Covers
 
-❓ Although inverse problem solving has been extensively explored using diffusion models, it has not been rigorously examined within the broader context of flow models. Therefore, __we extend diffusion inverse solvers (DIS)— which perform posterior sampling by combining a denoising diffusion prior with a likelihood gradient—into the flow framework.__
+FlowDPS extends diffusion-style posterior sampling into the broader **flow matching / ODE generative modeling** framework. In this repo, we focus on the reproducible benchmark side:
 
-👍 Our proposed framework, Flow-Driven Posterior Sampling (FlowDPS), can also be seamlessly integrated into a latent flow model with a transformer architecture. Across four linear inverse problems, we confirm that FlowDPS outperforms state-of-the-art alternatives, all without requiring additional training.
+- 🧪 Completed AFHQ-Cat super-resolution benchmark groups
+- 📊 Metric tables for FlowDPS, FlowChef, and PSLD
+- 🖼️ Qualitative reconstruction comparisons
+- 📝 A compact report explaining what has finished and where to resume
 
+This is a **reproduction and analysis package**, not the official FlowDPS code release.
 
-## Quick Start
+## Current Reproduction Status
 
-### Environment Setup
+| Scope | Progress |
+| --- | ---: |
+| AFHQ-Cat benchmark groups | `5 / 12` |
+| Public benchmark default plan | `5 / 36` |
+| Completed tasks | `sr_avgpool`, `sr_bicubic` |
+| Compared methods | `flowdps`, `flowchef`, `psld` |
 
-First, clone this repository and install requirements.
+## Quick Metric Snapshot
 
-```
-git clone https://github.com/FlowDPS-Inverse/FlowDPS.git
-cd FlowDPS
-conda create -n flowdps python==3.10
-conda activate flowdps
-pip install -r requirements.txt
-```
+| Task | Method | PSNR ↑ | SSIM ↑ | FID ↓ | LPIPS ↓ | Runtime |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| `sr_avgpool` | FlowDPS | **24.830** | 0.6329 | **20.775** | **0.2083** | 3.91 hr |
+| `sr_avgpool` | FlowChef | 24.738 | **0.6848** | 58.340 | 0.2665 | **2.21 hr** |
+| `sr_avgpool` | PSLD | 11.809 | 0.4346 | 321.913 | 0.6564 | 3.74 hr |
+| `sr_bicubic` | FlowDPS | **24.936** | 0.6322 | **19.261** | **0.1989** | 4.67 hr |
+| `sr_bicubic` | FlowChef | 24.909 | **0.6816** | 55.649 | 0.2658 | **2.11 hr** |
 
-> The provided requirements.txt installs torch with CUDA 11.8. If you are using other versions, please change it.
+## Visual Comparisons
 
-For the motion blur problem, clone the repository below.
-```
-git clone https://github.com/LeviBorodenko/motionblur.git
-```
+| Super-resolution task | Qualitative output |
+| --- | --- |
+| Avg-pool x12 | ![avgpool qualitative](deliverables/afhq_cat_partial_reproduction_2026-04-18/figures/afhq_cat_sr_avgpool_qualitative.png) |
+| Bicubic x12 | ![bicubic qualitative](deliverables/afhq_cat_partial_reproduction_2026-04-18/figures/afhq_cat_sr_bicubic_qualitative.png) |
 
-### Examples
+## Repository Map
 
-You can quickly check the results using the following examples.
-
-**Example 1. Super-resolution x 12 (avg-pool) / Dog**
-```
-python solve.py \
-    --img_size 768 \
-    --img_path samples/afhq_example.jpg \
-    --prompt "a photo of a closed face of a dog" \
-    --task sr_avgpool \
-    --deg_scale 12 \
-    --efficient_memory;
-```
-
-**Example 2. Super-resolution x 12 (bicubic) / Animal**
-```
-python solve.py \
-    --img_size 768 \
-    --img_path samples/div2k_example.png \
-    --prompt "a high quality photo of animal, bush, close-up, fox, grass, green, greenery, hide, panda, red, red panda, stare" \
-    --task sr_bicubic \
-    --deg_scale 12 \
-    --efficient_memory;
-```
-> The prompt (after "a high quality photo of") is extracted by DAPE from the given measurement.
-
-**Example 3. Motion Deblur / Human**
-```
-python solve.py \
-    --img_size 768 \
-    --img_path samples/ffhq_example.png \
-    --prompt "a photo of a closed face" \
-    --task deblur_motion \
-    --deg_scale 61 \
-    --efficient_memory;
+```text
+.
+├── Flowdps- Flow-driven posterior sampling for inverse problems.pdf
+├── README.md
+└── deliverables/
+    └── afhq_cat_partial_reproduction_2026-04-18/
+        ├── README.md
+        ├── docs/       # detailed partial reproduction report
+        ├── figures/    # metric and qualitative figures
+        ├── results/    # per-run metadata
+        └── tables/     # clean CSV summaries
 ```
 
+## How To Read This Repo
 
-For each task, expected results are
-![expect](assets/expected.jpg)
+1. Start with [`deliverables/afhq_cat_partial_reproduction_2026-04-18/README.md`](deliverables/afhq_cat_partial_reproduction_2026-04-18/README.md) for the reproduction scope.
+2. Open [`docs/afhq_cat_partial_report.md`](deliverables/afhq_cat_partial_reproduction_2026-04-18/docs/afhq_cat_partial_report.md) for metric explanations and figures.
+3. Use [`tables/afhq_cat_completed_only.csv`](deliverables/afhq_cat_partial_reproduction_2026-04-18/tables/afhq_cat_completed_only.csv) if you want to re-plot or compare the completed runs.
+4. Check the [paper PDF](<Flowdps- Flow-driven posterior sampling for inverse problems.pdf>) for the original method background.
 
+## Resume Point
 
-### Arbitrary size problem
-You can solve inverse problems for rectangular-shaped images. 
+The benchmark was paused after:
 
-```bash
-python solve_arbitrary.py \
-    --imgH 768 \
-    --imgW 1152 \
-    --img_path samples/div2k_example.png \
-    --prompt "a high quality photo of animal, bush, close-up, fox, grass, green, greenery, hide, panda, red, red panda, stare" \
-    --task deblur_motion \
-    --deg_scale 61 \
-    --efficient_memory;
-```
+- `afhq_cat / sr_avgpool / flowchef`
+- `afhq_cat / sr_avgpool / flowdps`
+- `afhq_cat / sr_avgpool / psld`
+- `afhq_cat / sr_bicubic / flowchef`
+- `afhq_cat / sr_bicubic / flowdps`
 
-Measurement            |  Reconstruction
-:-------------------------:|:-------------------------:
-![](assets/rect_input.png)  |  ![](assets/rect_output.png)
+The next unfinished AFHQ-Cat groups begin with:
 
-## How to choose task and solver
+- `sr_bicubic / psld`
+- `deblur_gauss / flowdps`
+- `deblur_gauss / flowchef`
+- `deblur_gauss / psld`
+- `deblur_motion / flowdps`
+- `deblur_motion / flowchef`
+- `deblur_motion / psld`
 
-You can freely change the task and solver using the following arguments:
-- `task` : sr_avgpool / sr_bicubic / deblur_gauss / deblur_motion
-- `method` : psld / flowchef / flowdps
+## Takeaway
 
-If you want to change the amount of degradation, change `deg_scale`. For SR tasks, it refers to the downscaling factor, and for deblurring tasks, it refers to the kernel size. 
-
-## Efficient inference
-
-If you use `--efficient_memory`, the text encoder will pre-compute text embeddings and be removed from the GPU.
-
-This allows us to solve inverse problem with a single GPU with VRAM of 24GB.
+Across the completed AFHQ-Cat runs, FlowDPS gives the strongest reconstruction quality on PSNR, FID, and LPIPS, while FlowChef is faster and often has higher SSIM. That trade-off is the main story captured by this package.
