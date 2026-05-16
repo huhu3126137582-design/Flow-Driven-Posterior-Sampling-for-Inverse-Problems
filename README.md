@@ -1,19 +1,19 @@
-# FlowDPS Reproduction Notes 🌊
+# FlowDPS Reproduction Notes
 
-This repository collects our reading notes, partial reproduction outputs, and benchmark summaries for **FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems**.
+This repository collects reading notes, partial reproduction outputs, and benchmark summaries for **FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems**.
 
-The goal is simple: make the paper's inverse-problem experiments easier to inspect, compare, and resume.
+The goal is simple: make the paper's inverse-problem experiments easier to inspect, compare, and resume. The README figures are generated from the CSV summaries in `deliverables/afhq_cat_partial_reproduction_2026-04-18/tables/` with a clean paper-style theme: white background, limited palette, light gridlines, and direct value labels.
 
-![AFHQ-Cat metric overview](deliverables/afhq_cat_partial_reproduction_2026-04-18/figures/afhq_cat_metric_overview.png)
+![FlowDPS metric dashboard](assets/readme_flowdps_metric_dashboard.png)
 
 ## What This Project Covers
 
 FlowDPS extends diffusion-style posterior sampling into the broader **flow matching / ODE generative modeling** framework. In this repo, we focus on the reproducible benchmark side:
 
-- 🧪 Completed AFHQ-Cat super-resolution benchmark groups
-- 📊 Metric tables for FlowDPS, FlowChef, and PSLD
-- 🖼️ Qualitative reconstruction comparisons
-- 📝 A compact report explaining what has finished and where to resume
+- Completed AFHQ-Cat super-resolution benchmark groups
+- Metric tables for FlowDPS, FlowChef, and PSLD
+- Qualitative reconstruction comparisons
+- A compact report explaining what has finished and where to resume
 
 This is a **reproduction and analysis package**, not the official FlowDPS code release.
 
@@ -28,13 +28,17 @@ This is a **reproduction and analysis package**, not the official FlowDPS code r
 
 ## Quick Metric Snapshot
 
-| Task | Method | PSNR ↑ | SSIM ↑ | FID ↓ | LPIPS ↓ | Runtime |
+| Task | Method | PSNR up | SSIM up | FID down | LPIPS down | Runtime |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | `sr_avgpool` | FlowDPS | **24.830** | 0.6329 | **20.775** | **0.2083** | 3.91 hr |
 | `sr_avgpool` | FlowChef | 24.738 | **0.6848** | 58.340 | 0.2665 | **2.21 hr** |
 | `sr_avgpool` | PSLD | 11.809 | 0.4346 | 321.913 | 0.6564 | 3.74 hr |
 | `sr_bicubic` | FlowDPS | **24.936** | 0.6322 | **19.261** | **0.1989** | 4.67 hr |
 | `sr_bicubic` | FlowChef | 24.909 | **0.6816** | 55.649 | 0.2658 | **2.11 hr** |
+
+The trade-off view highlights the current pattern: FlowDPS gives the strongest completed-run reconstruction quality, while FlowChef is faster and often has higher SSIM.
+
+![FlowDPS runtime trade-off](assets/readme_flowdps_tradeoff.png)
 
 ## Visual Comparisons
 
@@ -49,6 +53,7 @@ This is a **reproduction and analysis package**, not the official FlowDPS code r
 .
 ├── Flowdps- Flow-driven posterior sampling for inverse problems.pdf
 ├── README.md
+├── assets/        # README-facing figures generated from CSV metrics
 └── deliverables/
     └── afhq_cat_partial_reproduction_2026-04-18/
         ├── README.md
